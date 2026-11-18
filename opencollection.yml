@@ -1,0 +1,33 @@
+opencollection: 1.0.0
+
+info:
+  name: saentis
+config:
+  proxy:
+    inherit: true
+    config:
+      protocol: http
+      hostname: ""
+      port: ""
+      auth:
+        username: ""
+        password: ""
+      bypassProxy: ""
+
+request:
+  variables:
+    - name: baseUrl
+      value: http://127.0.0.1:8000
+bundled: false
+extensions:
+  bruno:
+    ignore:
+      - node_modules
+      - .git
+    openapi:
+      - sourceUrl: http://127.0.0.1:8000/openapi.json
+        groupBy: tags
+        lastSyncDate: 2026-11-18T16:54:20.799Z
+        specHash: a11c18bad6efc4250cdb2ff31304a09c
+        autoCheck: true
+        autoCheckInterval: 5

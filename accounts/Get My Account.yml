@@ -1,0 +1,55 @@
+info:
+  name: Get My Account
+  type: http
+  seq: 2
+  tags:
+    - accounts
+
+http:
+  method: GET
+  url: "{{baseUrl}}/accounts/me"
+  auth:
+    type: bearer
+    token: "{{token}}"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false
+
+examples:
+  - name: 200 Response
+    description: Successful Response
+    request:
+      url: "{{baseUrl}}/accounts/me"
+      method: GET
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Content-Type
+          value: application/json
+      body:
+        type: json
+        data: |-
+          {
+            "id": "",
+            "zitadel_id": "",
+            "email": "",
+            "first_name": "",
+            "last_name": "",
+            "created_at": ""
+          }
+  - name: 404 Response
+    description: No account for this user yet
+    request:
+      url: "{{baseUrl}}/accounts/me"
+      method: GET
+    response:
+      status: 404
+      statusText: Not Found
+      body:
+        type: text
+        data: ""

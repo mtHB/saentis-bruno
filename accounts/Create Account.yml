@@ -1,0 +1,129 @@
+info:
+  name: Create Account
+  type: http
+  seq: 1
+  tags:
+    - accounts
+
+http:
+  method: POST
+  url: "{{baseUrl}}/accounts"
+  body:
+    type: json
+    data: |-
+      {
+        "email": "",
+        "first_name": "",
+        "last_name": ""
+      }
+  auth:
+    type: oauth2
+    flow: authorization_code
+    authorizationUrl: http://localhost:8080/oauth/v2/authorize
+    accessTokenUrl: http://localhost:8080/oauth/v2/token
+    callbackUrl: http://localhost:5173/callback
+    credentials:
+      clientId: "400177479605616643"
+      placement: body
+    scope: openid profile offline_access
+    pkce:
+      disabled: true
+    tokenConfig:
+      id: credentials
+      placement:
+        header: Bearer
+      source: access_token
+    settings:
+      autoFetchToken: true
+      autoRefreshToken: false
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false
+
+examples:
+  - name: 201 Response
+    description: Successful Response
+    request:
+      url: "{{baseUrl}}/accounts"
+      method: POST
+      body:
+        type: json
+        data: |-
+          {
+            "email": "",
+            "first_name": "",
+            "last_name": ""
+          }
+    response:
+      status: 201
+      statusText: Created
+      headers:
+        - name: Content-Type
+          value: application/json
+      body:
+        type: json
+        data: |-
+          {
+            "id": "",
+            "zitadel_id": "",
+            "email": "",
+            "first_name": "",
+            "last_name": "",
+            "created_at": ""
+          }
+  - name: 409 Response
+    description: Email already registered
+    request:
+      url: "{{baseUrl}}/accounts"
+      method: POST
+      body:
+        type: json
+        data: |-
+          {
+            "email": "",
+            "first_name": "",
+            "last_name": ""
+          }
+    response:
+      status: 409
+      statusText: Conflict
+      body:
+        type: text
+        data: ""
+  - name: 422 Response
+    description: Validation Error
+    request:
+      url: "{{baseUrl}}/accounts"
+      method: POST
+      body:
+        type: json
+        data: |-
+          {
+            "email": "",
+            "first_name": "",
+            "last_name": ""
+          }
+    response:
+      status: 422
+      statusText: Unprocessable Entity
+      headers:
+        - name: Content-Type
+          value: application/json
+      body:
+        type: json
+        data: |-
+          {
+            "detail": [
+              {
+                "loc": [],
+                "msg": "",
+                "type": "",
+                "input": "",
+                "ctx": {}
+              }
+            ]
+          }
